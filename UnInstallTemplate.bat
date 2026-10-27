@@ -26,8 +26,11 @@ FOR /f "delims=" %%A IN ('"%VSWHERE%" -products Microsoft.VisualStudio.Product.B
 	IF EXIST "!VCT_PATH!" CALL :SUB_VS2017 "!VCT_PATH!"
 )
 
-@rem Visual Studio 2019, 2022
-FOR /f "delims=" %%A IN ('"%VSWHERE%" -property installationPath -prerelease -version [16.0^,18.0^)') DO (
+@rem Visual Studio 2019, 2022, 2026
+FOR /f "delims=" %%A IN ('"%VSWHERE%" -property installationPath -prerelease -version [16.0^,19.0^)') DO (
+	@rem Visual C++ 2026 v145 toolset
+	SET VCT_PATH=%%A\MSBuild\Microsoft\VC\v180\Platforms
+	IF EXIST "!VCT_PATH!" CALL :SUB_VS2026 "!VCT_PATH!"
 	@rem Visual C++ 2022 v143 toolset
 	SET VCT_PATH=%%A\MSBuild\Microsoft\VC\v170\Platforms
 	IF EXIST "!VCT_PATH!" CALL :SUB_VS2022 "!VCT_PATH!"
@@ -39,8 +42,11 @@ FOR /f "delims=" %%A IN ('"%VSWHERE%" -property installationPath -prerelease -ve
 	IF EXIST "!VCT_PATH!" CALL :SUB_VS2017 "!VCT_PATH!"
 )
 
-@rem Visual Studio 2019, 2022 Build Tools
-FOR /f "delims=" %%A IN ('"%VSWHERE%" -products Microsoft.VisualStudio.Product.BuildTools -property installationPath -prerelease -version [16.0^,18.0^)') DO (
+@rem Visual Studio 2019, 2022, 2026 Build Tools
+FOR /f "delims=" %%A IN ('"%VSWHERE%" -products Microsoft.VisualStudio.Product.BuildTools -property installationPath -prerelease -version [16.0^,19.0^)') DO (
+	@rem Visual C++ 2026 v145 toolset
+	SET VCT_PATH=%%A\MSBuild\Microsoft\VC\v180\Platforms
+	IF EXIST "!VCT_PATH!" CALL :SUB_VS2026 "!VCT_PATH!"
 	@rem Visual C++ 2022 v143 toolset
 	SET VCT_PATH=%%A\MSBuild\Microsoft\VC\v170\Platforms
 	IF EXIST "!VCT_PATH!" CALL :SUB_VS2022 "!VCT_PATH!"
@@ -53,7 +59,7 @@ FOR /f "delims=" %%A IN ('"%VSWHERE%" -products Microsoft.VisualStudio.Product.B
 )
 
 IF %SUCCESS% == 0 (
-	ECHO Visual C++ 2017, 2019 or 2022 NOT Installed.
+	ECHO Visual C++ 2017, 2019, 2022 or 2026 NOT Installed.
 	IF "%EXIT_ON_ERROR%" == "" EXIT /B
 )
 
@@ -115,5 +121,19 @@ rd /s/q "%~1\ARM64\PlatformToolsets\LLVM-MSVC_v143"
 rd /s/q "%~1\ARM64\PlatformToolsets\LLVM-MSVC_v143_KernelMode"
 rd /s/q "%~1\ARM\PlatformToolsets\LLVM-MSVC_v143"
 rd /s/q "%~1\ARM\PlatformToolsets\LLVM-MSVC_v143_KernelMode"
+SET SUCCESS=1
+EXIT /B
+
+:SUB_VS2026
+ECHO VCTargetsPath for Visual Studio 2026: %~1
+rd /s/q "%~1\..\LLVM-MSVC"
+rd /s/q "%~1\x64\PlatformToolsets\LLVM-MSVC_v145"
+rd /s/q "%~1\x64\PlatformToolsets\LLVM-MSVC_v145_KernelMode"
+rd /s/q "%~1\Win32\PlatformToolsets\LLVM-MSVC_v145"
+rd /s/q "%~1\Win32\PlatformToolsets\LLVM-MSVC_v145_KernelMode"
+rd /s/q "%~1\ARM64\PlatformToolsets\LLVM-MSVC_v145"
+rd /s/q "%~1\ARM64\PlatformToolsets\LLVM-MSVC_v145_KernelMode"
+rd /s/q "%~1\ARM\PlatformToolsets\LLVM-MSVC_v145"
+rd /s/q "%~1\ARM\PlatformToolsets\LLVM-MSVC_v145_KernelMode"
 SET SUCCESS=1
 EXIT /B

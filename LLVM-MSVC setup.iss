@@ -43,6 +43,7 @@ Source: "LLVM-MSVC_v141\*"; DestDir: "{app}\template\LLVM-MSVC_v141"; Flags: ign
 Source: "LLVM-MSVC_v141_xp\*"; DestDir: "{app}\template\LLVM-MSVC_v141_xp"; Flags: ignoreversion recursesubdirs
 Source: "LLVM-MSVC_v142\*"; DestDir: "{app}\template\LLVM-MSVC_v142"; Flags: ignoreversion recursesubdirs
 Source: "LLVM-MSVC_v143\*"; DestDir: "{app}\template\LLVM-MSVC_v143"; Flags: ignoreversion recursesubdirs
+Source: "LLVM-MSVC_v145\*"; DestDir: "{app}\template\LLVM-MSVC_v145"; Flags: ignoreversion recursesubdirs
 Source: "LLVM-MSVC_KernelMode\*"; DestDir: "{app}\template\LLVM-MSVC_KernelMode"; Flags: ignoreversion recursesubdirs
 
 [Languages]
